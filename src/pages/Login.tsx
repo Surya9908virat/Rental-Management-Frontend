@@ -24,7 +24,15 @@ const Login: React.FC = () => {
       const response = await api.post('/auth/login', { email, password });
       const { user, token } = response.data;
       login(user, token);
-      navigate('/profile');
+      
+      // Navigate to correct dashboard based on role
+      if (user.role === 'landlord') {
+        navigate('/landlord/dashboard');
+      } else if (user.role === 'tenant') {
+        navigate('/tenant/dashboard');
+      } else {
+        navigate('/profile');
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to login. Please check your credentials.');
     } finally {
