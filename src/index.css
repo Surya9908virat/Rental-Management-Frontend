@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* =============================================
+   RENTAL MANAGEMENT — Light/Dark Theme
+   Light: white background + black text
+   Dark:  black background + white text
+   ============================================= */
+
+:root {
+  --color-primary:   #4F46E5; /* Indigo 600 - more vibrant */
+  --color-primary-dark: #4338CA;
+  --color-primary-darker: #3730A3;
+  --color-accent:    #10B981; /* Emerald */
+
+  --color-bg-base:   #F8FAFC; /* Slate 50 - clean off-white */
+  --color-bg-card:   #FFFFFF;
+  --color-text-head: #0F172A; /* Slate 900 */
+  --color-text-body: #334155; /* Slate 700 */
+  --color-text-muted:#64748B; /* Slate 500 */
+  --color-border:    #E2E8F0; /* Slate 200 */
+}
+
+/* Dark mode variables */
+.dark {
+  --color-bg-base:   #0F172A; /* Slate 900 - deep rich navy */
+  --color-bg-card:   #1E293B; /* Slate 800 - dark card */
+  --color-text-head: #FFFFFF;
+  --color-text-body: #CBD5E1; /* Slate 300 */
+  --color-text-muted:#94A3B8; /* Slate 400 */
+  --color-border:    rgba(255, 255, 255, 0.1);
+}
+
+/* Secondary text helper */
+.text-secondary       { color: #1E293B; }
+.dark .text-secondary { color: #F1F5F9; }
+
+/* Improve contrast for common muted text in dark mode */
+.dark .text-slate-500 { color: rgba(241,245,249,0.85) !important; }
+.dark .text-slate-400 { color: rgba(241,245,249,0.7) !important; }
+.dark .text-slate-600 { color: rgba(241,245,249,0.9) !important; }
+
+@layer base {
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-body);
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 { color: var(--color-text-head); }
+
+  /* Ensure all text in dark mode stays high contrast */
+  .dark body, .dark p, .dark span, .dark div, .dark a, .dark li, .dark label {
+    color: var(--color-text-body) !important;
+  }
+
+  /* Thin scrollbar */
+  ::-webkit-scrollbar       { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.6); border-radius: 9999px; }
+  .dark ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.35); }
+}
+
+/* === Blue icon bubbles for cards === */
+.icon-bubble-blue   { background-color: #DBEAFE; color: #2563EB; }
+.icon-bubble-green  { background-color: #D1FAE5; color: #059669; }
+.icon-bubble-yellow { background-color: #FEF3C7; color: #D97706; }
+.icon-bubble-purple { background-color: #EDE9FE; color: #7C3AED; }
+
+/* === Card shadow utility === */
+.card-saas {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(12px);
+}
+.card-saas:hover {
+  box-shadow: 0 4px 16px rgba(37,99,235,0.1), 0 8px 24px rgba(0,0,0,0.06);
+}
+
+/* === Navbar hover ripple util === */
+.nav-item-hover {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.nav-item-hover:hover {
+  background-color: rgba(255,255,255,0.15);
+  color: #FFFFFF;
+}
