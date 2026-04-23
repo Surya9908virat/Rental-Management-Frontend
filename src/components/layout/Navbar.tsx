@@ -2,9 +2,13 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { ThemeContext } from '../../context/ThemeContext';
-import { Home, LogOut, User as UserIcon, Sun, Moon, ChevronDown, Settings } from 'lucide-react';
+import { Home, LogOut, User as UserIcon, Sun, Moon, ChevronDown, Settings, Menu } from 'lucide-react';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onMenuClick?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const { darkMode, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -29,18 +33,31 @@ export const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="bg-[#2563EB] dark:bg-[#1E3A8A] sticky top-0 z-50 transition-colors duration-300"
+    <nav className="bg-[#2563EB] dark:bg-[#1E3A8A] sticky top-0 z-40 transition-colors duration-300"
          style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo */}
-          <Link to={user ? "/profile" : "/"} className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center group-hover:bg-white/30 transition-all">
-              <Home size={18} className="text-white" />
-            </div>
-            <span className="font-bold text-xl text-white tracking-tight">Rental Management</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            {/* Hamburger for mobile if user is logged in */}
+            {user && (
+              <button 
+                onClick={onMenuClick}
+                className="md:hidden p-2 -ml-2 text-white/80 hover:text-white rounded-lg transition-colors"
+                aria-label="Open menu"
+              >
+                <Menu size={24} />
+              </button>
+            )}
+
+            {/* Logo */}
+            <Link to={user ? "/profile" : "/"} className="flex items-center gap-2 group">
+              <div className="hidden md:flex w-8 h-8 bg-white/20 rounded-lg items-center justify-center group-hover:bg-white/30 transition-all">
+                <Home size={18} className="text-white" />
+              </div>
+              <span className="font-bold text-lg md:text-xl text-white tracking-tight">Rental Mgmt</span>
+            </Link>
+          </div>
 
           {/* Right side */}
           <div className="flex items-center gap-2">

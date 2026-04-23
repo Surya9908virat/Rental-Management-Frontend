@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { format } from 'date-fns';
 import { ArrowLeft, Send, MessageSquare, Image as ImageIcon, Clock } from 'lucide-react';
 import api from '../services/apiClient';
+import { useToast } from '../context/ToastContext';
 
 import socket from '../services/socket';
 
@@ -18,6 +19,7 @@ const MaintenanceDetail: React.FC = () => {
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const { error, success } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -77,9 +79,9 @@ const MaintenanceDetail: React.FC = () => {
       });
       setMessages([...messages, res.data]);
       setNewMessage('');
-    } catch (error) {
-      console.error("Failed to send message", error);
-      alert('Failed to send message.');
+    } catch (err) {
+      console.error("Failed to send message", err);
+      error('Failed to send message.');
     }
   };
 
@@ -94,11 +96,11 @@ const MaintenanceDetail: React.FC = () => {
       });
       setRequest(res.data.request);
       setStatusMessage('');
-      alert(`Status successfully updated to ${newStatus}`);
-    } catch (error: any) {
-      console.error("Failed to update status", error);
-      const msg = error.response?.data?.message || error.message || 'Failed to update request status.';
-      alert(`Error updating status: ${msg}`);
+      success(`Status successfully updated to ${newStatus}`);
+    } catch (err: any) {
+      console.error("Failed to update status", err);
+      const msg = err.response?.data?.message || err.message || 'Failed to update request status.';
+      error(`Error updating status: ${msg}`);
     } finally {
       setUpdating(false);
     }

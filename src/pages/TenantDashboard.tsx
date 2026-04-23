@@ -6,6 +6,8 @@ import { CreditCard, Wrench, Home, CheckCircle, XCircle, Loader2, AlertCircle, M
 import { Link } from 'react-router-dom';
 import api from '../services/apiClient';
 import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, Cell } from 'recharts';
+import { useToast } from '../context/ToastContext';
+import { DashboardSkeleton } from '../components/ui/Skeleton';
 
 const paymentData = [
   { month: 'Jan', status: 'Paid', amount: 1200 },
@@ -21,6 +23,7 @@ const TenantDashboard: React.FC = () => {
   const [leases, setLeases] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
+  const { success, error } = useToast();
 
   const fetchLeases = async () => {
     try {
@@ -41,10 +44,10 @@ const TenantDashboard: React.FC = () => {
     setProcessing(id);
     try {
       await api.post(`/leases/${id}/${action}`);
-      alert(`Lease ${action}ed successfully!`);
+      success(`Lease ${action}ed successfully!`);
       fetchLeases();
-    } catch (error: any) {
-      alert(error.response?.data?.message || `Failed to ${action} lease.`);
+    } catch (err: any) {
+      error(err.response?.data?.message || `Failed to ${action} lease.`);
     } finally {
       setProcessing(null);
     }
@@ -53,7 +56,7 @@ const TenantDashboard: React.FC = () => {
   const pendingLeases = leases.filter(l => l.status === 'pending');
   const activeLease = leases.find(l => l.status === 'active');
 
-  if (loading) return <div className="text-center py-20 text-slate-500 font-medium italic">Loading your dashboard...</div>;
+  if (loading) return <DashboardSkeleton />;
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto w-full pb-10">

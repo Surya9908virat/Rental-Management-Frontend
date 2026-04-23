@@ -48,14 +48,14 @@ const LandlordDashboard: React.FC = () => {
   const openRequests = requests.filter(r => r.status !== 'resolved');
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-secondary dark:text-white">Landlord Hub</h1>
-        <p className="text-white/80">Welcome back. Here's what's happening with your properties.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-secondary dark:text-white">Landlord Hub</h1>
+        <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1">Welcome back. Here's what's happening with your properties.</p>
       </div>
 
       {/* Stats Overview / Hub Links */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <Link to="/landlord/properties" className="group">
           <Card className="h-full border-transparent hover:border-primary/30 hover:shadow-2xl transition-all cursor-pointer overflow-hidden group">
             <CardContent className="p-6">
@@ -118,7 +118,7 @@ const LandlordDashboard: React.FC = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* Maintenance Queue - Taking more space */}
         <div className="lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">

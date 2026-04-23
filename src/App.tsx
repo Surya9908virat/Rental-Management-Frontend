@@ -19,9 +19,12 @@ import AvailableLeases from "./pages/AvailableLeases";
 import TenantLease from "./pages/TenantLease";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
+import { ToastProvider } from "./context/ToastContext";
+
 function App() {
   return (
-    <BrowserRouter>
+    <ToastProvider>
+      <BrowserRouter>
       <Layout>
         <Routes>
           {/* --- PUBLIC ROUTES --- */}
@@ -151,7 +154,8 @@ function App() {
           <Route path="/tenant/profile" element={<Navigate to="/profile" replace />} />
         </Routes>
       </Layout>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ToastProvider>
   );
 }
 
